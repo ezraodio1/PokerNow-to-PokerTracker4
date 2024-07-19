@@ -1,9 +1,10 @@
 import os
 from src.my_utils import process_file, upload_to_PT4, move_files
 
+
 def pokernow_to_pokertracker():
-    source_folder = 'poker_logs/pokernow_logs'
-    destination_folder = 'poker_logs/old_pokernow_logs'
+    source_folder = "poker_logs/pokernow_logs"
+    destination_folder = "poker_logs/old_pokernow_logs"
 
     os.makedirs(destination_folder, exist_ok=True)
 
@@ -23,4 +24,4 @@ def pokernow_to_pokertracker():
     if shouldUpload:
         uploaded = upload_to_PT4()
         if uploaded:
-            move_files('poker_logs/pokerstars_format_logs', 'poker_logs/uploaded_logs')
+            move_files("poker_logs/pokerstars_format_logs", "poker_logs/uploaded_logs")

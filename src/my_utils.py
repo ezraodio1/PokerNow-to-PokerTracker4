@@ -5,27 +5,37 @@ import subprocess
 import time
 from AppKit import NSWorkspace
 from Quartz.CoreGraphics import (
-    CGEventCreateMouseEvent, CGEventCreateKeyboardEvent, CGEventPost,
-    kCGEventLeftMouseDown, kCGEventLeftMouseUp, kCGEventMouseMoved,
-    kCGMouseButtonLeft, CGPoint
+    CGEventCreateMouseEvent,
+    CGEventCreateKeyboardEvent,
+    CGEventPost,
+    kCGEventLeftMouseDown,
+    kCGEventLeftMouseUp,
+    kCGEventMouseMoved,
+    kCGMouseButtonLeft,
+    CGPoint,
 )
 
 
 def process_file(filename):
-    if filename in os.listdir('poker_logs/old_pokernow_logs'):
+    if filename in os.listdir("poker_logs/old_pokernow_logs"):
         print(f"File {filename} has already been converted")
         return False
     try:
-        file_path = 'poker_logs/pokernow_logs/' + filename
+        file_path = "poker_logs/pokernow_logs/" + filename
         print(f"Processing {filename}")
-        convert_poker_now_files(hero_name="ezra", input_filename=file_path, output_directory='poker_logs/pokerstars_format_logs')
+        convert_poker_now_files(
+            hero_name="ezra",
+            input_filename=file_path,
+            output_directory="poker_logs/pokerstars_format_logs",
+        )
         return True
     except Exception as e:
         print(f"Failed to process {filename}: {e}")
         return False
 
+
 def upload_to_PT4():
-    PT4_PATH = '/Applications/PokerTracker 4.app'
+    PT4_PATH = "/Applications/PokerTracker 4.app"
     NSWorkspace.sharedWorkspace().launchApplication_(PT4_PATH)
     time.sleep(5)
     click_ok_button()
@@ -38,7 +48,9 @@ def upload_to_PT4():
     time.sleep(1)
     click_select_files()
     time.sleep(1)
-    navigate_and_select_in_dialog('~/Documents/Personal/Poker/Poker Script/poker_logs/pokerstars_format_logs')
+    navigate_and_select_in_dialog(
+        "~/Documents/Personal/Poker/Poker Script/poker_logs/pokerstars_format_logs"
+    )
     time.sleep(1)
     click_first_file()
     time.sleep(5)
@@ -48,11 +60,14 @@ def upload_to_PT4():
     time.sleep(1)
     return True
 
+
 def click_first_file():
     click_mouse(466, 270)
 
+
 def click_open():
     click_mouse(1205, 637)
+
 
 def navigate_and_select_in_dialog(folder_path):
     script = f"""
@@ -68,30 +83,36 @@ def navigate_and_select_in_dialog(folder_path):
         end tell
     end tell
     """
-    subprocess.run(['osascript', '-e', script])
+    subprocess.run(["osascript", "-e", script])
+
 
 def click_confirm_import():
     click_mouse(853, 597)
 
+
 def click_select_files():
     click_mouse(714, 595)
+
 
 def click_get_hands_from_disk():
     click_mouse(537, 118)
 
+
 def click_select_directory():
     click_mouse(831, 596)
+
 
 def click_play_poker():
     click_mouse(122, 80)
 
+
 def enter_full_screen():
     key_cmd_down = CGEventCreateKeyboardEvent(None, 0x37, True)
-    key_ctrl_down = CGEventCreateKeyboardEvent(None, 0x3b, True)
+    key_ctrl_down = CGEventCreateKeyboardEvent(None, 0x3B, True)
     key_f_down = CGEventCreateKeyboardEvent(None, 0x03, True)
 
     key_f_up = CGEventCreateKeyboardEvent(None, 0x03, False)
-    key_ctrl_up = CGEventCreateKeyboardEvent(None, 0x3b, False)
+    key_ctrl_up = CGEventCreateKeyboardEvent(None, 0x3B, False)
     key_cmd_up = CGEventCreateKeyboardEvent(None, 0x37, False)
 
     CGEventPost(0, key_cmd_down)
@@ -102,19 +123,29 @@ def enter_full_screen():
     CGEventPost(0, key_ctrl_up)
     CGEventPost(0, key_cmd_up)
 
+
 def click_ok_button():
     click_mouse(941, 696)
 
+
 def move_mouse_to(x, y):
-    event = CGEventCreateMouseEvent(None, kCGEventMouseMoved, CGPoint(x, y), kCGMouseButtonLeft)
+    event = CGEventCreateMouseEvent(
+        None, kCGEventMouseMoved, CGPoint(x, y), kCGMouseButtonLeft
+    )
     CGEventPost(0, event)
+
 
 def click_mouse(x, y):
     move_mouse_to(x, y)
-    event_down = CGEventCreateMouseEvent(None, kCGEventLeftMouseDown, CGPoint(x, y), kCGMouseButtonLeft)
-    event_up = CGEventCreateMouseEvent(None, kCGEventLeftMouseUp, CGPoint(x, y), kCGMouseButtonLeft)
+    event_down = CGEventCreateMouseEvent(
+        None, kCGEventLeftMouseDown, CGPoint(x, y), kCGMouseButtonLeft
+    )
+    event_up = CGEventCreateMouseEvent(
+        None, kCGEventLeftMouseUp, CGPoint(x, y), kCGMouseButtonLeft
+    )
     CGEventPost(0, event_down)
     CGEventPost(0, event_up)
+
 
 def move_files(source_folder, destination_folder):
     if not os.path.exists(destination_folder):
