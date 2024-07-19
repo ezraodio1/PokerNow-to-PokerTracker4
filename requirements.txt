@@ -1,3 +1,5 @@
 poker-now-log-converter==0.0.13
 pyobjc==10.3.1
 watchdog==4.0.1
+ruff==0.5.3
+black==24.4.2

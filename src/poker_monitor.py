@@ -5,6 +5,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import importlib.util
 
+
 class DownloadEventHandler(FileSystemEventHandler):
     def __init__(self, pattern, script_path, function_name, destination_folder):
         self.pattern = pattern
@@ -22,17 +23,20 @@ class DownloadEventHandler(FileSystemEventHandler):
     def on_created(self, event):
         print(f"File created: {event.src_path}")
 
-        if (not event.is_directory and
-            not os.path.basename(event.src_path).startswith('.') and
-            not event.src_path.endswith('.crdownload') and
-            not event.src_path.endswith('.part') and
-            os.path.basename(event.src_path).startswith(self.pattern)):
-
+        if (
+            not event.is_directory
+            and not os.path.basename(event.src_path).startswith(".")
+            and not event.src_path.endswith(".crdownload")
+            and not event.src_path.endswith(".part")
+            and os.path.basename(event.src_path).startswith(self.pattern)
+        ):
             print(f"New file detected: {event.src_path}")
 
             time.sleep(5)
 
-            if os.path.exists(event.src_path) and not self.is_file_being_written(event.src_path):
+            if os.path.exists(event.src_path) and not self.is_file_being_written(
+                event.src_path
+            ):
                 print(f"Processing file: {event.src_path}")
                 self.move_file(event.src_path)
                 self.run_script()
@@ -46,7 +50,10 @@ class DownloadEventHandler(FileSystemEventHandler):
     def move_file(self, filepath):
         try:
             os.makedirs(self.destination_folder, exist_ok=True)
-            shutil.move(filepath, os.path.join(self.destination_folder, os.path.basename(filepath)))
+            shutil.move(
+                filepath,
+                os.path.join(self.destination_folder, os.path.basename(filepath)),
+            )
             print(f"File moved to: {self.destination_folder}")
         except Exception as e:
             print(f"Failed to move file: {e}")
@@ -55,8 +62,13 @@ class DownloadEventHandler(FileSystemEventHandler):
         func = getattr(self.module, self.function_name)
         func()
 
-def monitor_folder(folder_path, pattern, script_path, function_name, destination_folder):
-    event_handler = DownloadEventHandler(pattern, script_path, function_name, destination_folder)
+
+def monitor_folder(
+    folder_path, pattern, script_path, function_name, destination_folder
+):
+    event_handler = DownloadEventHandler(
+        pattern, script_path, function_name, destination_folder
+    )
     observer = Observer()
     observer.schedule(event_handler, path=folder_path, recursive=False)
     observer.start()
@@ -66,6 +78,7 @@ def monitor_folder(folder_path, pattern, script_path, function_name, destination
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
+
 
 # if __name__ == "__main__":
 #     downloads_folder = os.path.expanduser("~/Downloads")
