@@ -67,11 +67,11 @@ def monitor_folder(folder_path, pattern, script_path, function_name, destination
         observer.stop()
     observer.join()
 
-if __name__ == "__main__":
-    downloads_folder = os.path.expanduser("~/Downloads")
-    filename_pattern = "poker_now_log_"
-    script_path = os.path.join(os.path.dirname(__file__), "pokernow_to_pokertracker.py")
-    function_name = "pokernow_to_pokertracker"
-    destination_folder = os.path.expanduser("~/Documents/Personal/Poker/Poker Script/pokernow_logs")
+# if __name__ == "__main__":
+#     downloads_folder = os.path.expanduser("~/Downloads")
+#     filename_pattern = "poker_now_log_"
+#     script_path = os.path.join(os.path.dirname(__file__), "pokernow_to_pokertracker.py")
+#     function_name = "pokernow_to_pokertracker"
+#     destination_folder = os.path.expanduser("~/Documents/Personal/Poker/Poker Script/poker_logs/pokernow_logs")
 
-    monitor_folder(downloads_folder, filename_pattern, script_path, function_name, destination_folder)
+#     monitor_folder(downloads_folder, filename_pattern, script_path, function_name, destination_folder)

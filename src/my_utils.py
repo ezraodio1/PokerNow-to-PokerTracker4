@@ -12,13 +12,13 @@ from Quartz.CoreGraphics import (
 
 
 def process_file(filename):
-    if filename in os.listdir('old_pokernow_logs'):
+    if filename in os.listdir('poker_logs/old_pokernow_logs'):
         print(f"File {filename} has already been converted")
         return False
     try:
-        file_path = 'pokernow_logs/' + filename
+        file_path = 'poker_logs/pokernow_logs/' + filename
         print(f"Processing {filename}")
-        convert_poker_now_files(hero_name="ezra", input_filename=file_path, output_directory='pokerstars_format_logs')
+        convert_poker_now_files(hero_name="ezra", input_filename=file_path, output_directory='poker_logs/pokerstars_format_logs')
         return True
     except Exception as e:
         print(f"Failed to process {filename}: {e}")
@@ -38,7 +38,7 @@ def upload_to_PT4():
     time.sleep(1)
     click_select_files()
     time.sleep(1)
-    navigate_and_select_in_dialog('~/Documents/Personal/Poker/Poker Script/pokerstars_format_logs')
+    navigate_and_select_in_dialog('~/Documents/Personal/Poker/Poker Script/poker_logs/pokerstars_format_logs')
     time.sleep(1)
     click_first_file()
     time.sleep(5)
