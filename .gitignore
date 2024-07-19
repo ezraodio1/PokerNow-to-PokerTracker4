@@ -1,0 +1,7 @@
+poker_venv/
+old_pokernow_logs/
+__pycache__/
+pokernow_logs/
+pokerstars_format_logs/
+uploaded_logs/
+.DS_Store
